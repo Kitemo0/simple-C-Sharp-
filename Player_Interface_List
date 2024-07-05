@@ -1,0 +1,107 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace players_game
+{
+
+public class Game
+{
+    
+    struct Player
+    {
+        private string username;
+        private string password;
+        private int lvl;
+        
+        public string Username { get{return username;} set{username = value;}}
+        public string Password { get{return password;} set{password = value;}}
+        public int Lvl { get{return lvl;} set{lvl = value;}}
+    }
+    
+    private static List<Player> playerList = new List<Player>();
+    
+    private static void addPlayer()
+    {
+        Player player = new Player();
+        
+        Console.Write("Enter username for new player:");
+        player.Username = Convert.ToString(Console.ReadLine());
+        
+        Console.Write("Enter password for new player:");
+        player.Password = Convert.ToString(Console.ReadLine());
+        
+        Console.Write("Enter lvl for new player:");
+        player.Lvl = Convert.ToInt32(Console.ReadLine());
+        
+        playerList.Add(player);
+        
+        Console.WriteLine("Player Has been added");
+    }
+    
+    private static void deletePlayer()
+    {
+        
+        if(playerList.Count == 0)
+        {
+            Console.WriteLine("Database is empty. Please add some players.");
+            return;
+        }
+        Console.WriteLine("Players:");
+        for(int i=0;i<playerList.Count;i++)
+        {
+           Console.WriteLine((i+1) + ". " + playerList[i].Username + " ( LVL: " + playerList[i].Lvl + ")"); 
+        }
+        
+        Console.WriteLine("Choose player to delete:");
+        
+        int number = Convert.ToInt32(Console.ReadLine());
+        
+        if(number < 1 || number > playerList.Count)
+        {
+            Console.WriteLine("Incorrect number. Please try again!");
+            return;
+        }
+        
+        playerList.RemoveAt(number - 1);
+        
+        Console.WriteLine("Player has been deleted");
+    }
+    
+    private static void showPlayers()
+    {
+        if(playerList.Count == 0)
+        {
+            Console.WriteLine("Database is empty. Please add some players.");
+            return;
+        }
+        Console.WriteLine("Players:");
+        for(int i=0;i<playerList.Count;i++)
+        {
+           Console.WriteLine((i+1) + ". " + playerList[i].Username + " " + playerList[i].Password + " ( LVL: " + playerList[i].Lvl + ")"); 
+        }
+    }
+    
+    public static void Main(string[] args)
+    {
+        while(true)
+        {
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine("1. Add Player");
+            Console.WriteLine("2. Delete Player");
+            Console.WriteLine("3. Show Players");
+            
+            Console.Write("Choose:");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            switch(choice)
+            {
+                case 1: addPlayer(); break;
+                
+                case 2: deletePlayer(); break;
+                
+                case 3: showPlayers(); break;
+            }
+        }
+    }
+}
+}
